@@ -1,10 +1,10 @@
-package com.github.codingdebugallday.rmi.demo.service.impl;
+package com.github.thestyleofme.rmi.demo.service.impl;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import com.github.codingdebugallday.rmi.demo.pojo.User;
-import com.github.codingdebugallday.rmi.demo.service.HelloService;
+import com.github.thestyleofme.rmi.demo.pojo.User;
+import com.github.thestyleofme.rmi.demo.service.HelloService;
 
 /**
  * <p>

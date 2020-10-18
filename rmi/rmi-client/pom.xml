@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>rmi</artifactId>
-        <groupId>com.github.codingdebugallday</groupId>
+        <groupId>com.github.thestyleofme</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 

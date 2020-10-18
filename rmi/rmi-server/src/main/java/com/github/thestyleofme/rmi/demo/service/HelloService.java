@@ -1,9 +1,9 @@
-package com.github.codingdebugallday.rmi.demo.service;
+package com.github.thestyleofme.rmi.demo.service;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
-import com.github.codingdebugallday.rmi.demo.pojo.User;
+import com.github.thestyleofme.rmi.demo.pojo.User;
 
 /**
  * <p>

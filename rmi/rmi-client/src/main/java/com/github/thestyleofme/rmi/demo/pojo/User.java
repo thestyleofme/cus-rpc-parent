@@ -1,4 +1,4 @@
-package com.github.codingdebugallday.rmi.demo.pojo;
+package com.github.thestyleofme.rmi.demo.pojo;
 
 import java.io.Serializable;
 

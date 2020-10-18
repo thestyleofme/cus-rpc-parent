@@ -1,12 +1,12 @@
-package com.github.codingdebugallday.rmi;
+package com.github.thestyleofme.rmi;
 
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import com.github.codingdebugallday.rmi.demo.pojo.User;
-import com.github.codingdebugallday.rmi.demo.service.HelloService;
+import com.github.thestyleofme.rmi.demo.pojo.User;
+import com.github.thestyleofme.rmi.demo.service.HelloService;
 
 /**
  * <p>

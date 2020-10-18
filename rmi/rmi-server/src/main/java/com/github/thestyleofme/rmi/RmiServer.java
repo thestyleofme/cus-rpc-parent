@@ -1,4 +1,4 @@
-package com.github.codingdebugallday.rmi;
+package com.github.thestyleofme.rmi;
 
 import java.net.MalformedURLException;
 import java.rmi.AlreadyBoundException;
@@ -6,8 +6,8 @@ import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 
-import com.github.codingdebugallday.rmi.demo.service.HelloService;
-import com.github.codingdebugallday.rmi.demo.service.impl.HelloServiceImpl;
+import com.github.thestyleofme.rmi.demo.service.HelloService;
+import com.github.thestyleofme.rmi.demo.service.impl.HelloServiceImpl;
 
 /**
  * <p>
