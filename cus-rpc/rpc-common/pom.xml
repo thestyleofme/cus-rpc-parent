@@ -3,11 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>cus-rpc</artifactId>
+        <groupId>com.github.thestyleofme</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
 
-    <groupId>com.github.thestyleofme</groupId>
-    <artifactId>cus-rpc-parent</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>pom</packaging>
+    <artifactId>rpc-common</artifactId>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -16,10 +18,13 @@
         <java.version>1.8</java.version>
     </properties>
 
-    <modules>
-        <module>rmi</module>
-        <module>netty-demo</module>
-        <module>cus-rpc</module>
-    </modules>
+    <dependencies>
+        <dependency>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>4.1.53.Final</version>
+        </dependency>
+    </dependencies>
+
 
 </project>
