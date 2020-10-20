@@ -2,6 +2,7 @@ package com.github.thestyleofme.rpc.consumer.handler;
 
 import java.util.concurrent.Callable;
 
+import com.github.thestyleofme.rpc.common.pojo.RpcRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
@@ -26,7 +27,7 @@ public class UserClientHandler extends ChannelInboundHandlerAdapter implements C
     /**
      * 记录将要发送给服务器的数据
      */
-    private String param;
+    private RpcRequest rpcRequest;
 
     /**
      * 客户端和服务器连接时，该方法就自动执行
@@ -51,12 +52,12 @@ public class UserClientHandler extends ChannelInboundHandlerAdapter implements C
      */
     @Override
     public synchronized Object call() throws Exception {
-        context.writeAndFlush(param);
+        context.writeAndFlush(rpcRequest);
         wait();
         return result;
     }
 
-    public void setParam(String param) {
-        this.param = param;
+    public void setParam(RpcRequest rpcRequest) {
+        this.rpcRequest = rpcRequest;
     }
 }

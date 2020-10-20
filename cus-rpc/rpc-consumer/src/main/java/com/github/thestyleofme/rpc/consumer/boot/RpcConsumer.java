@@ -1,8 +1,12 @@
 package com.github.thestyleofme.rpc.consumer.boot;
 
 import java.lang.reflect.Proxy;
+import java.util.UUID;
 import java.util.concurrent.*;
 
+import com.github.thestyleofme.rpc.common.codec.JsonSerializer;
+import com.github.thestyleofme.rpc.common.codec.RpcEncoder;
+import com.github.thestyleofme.rpc.common.pojo.RpcRequest;
 import com.github.thestyleofme.rpc.consumer.handler.UserClientHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelInitializer;
@@ -13,7 +17,6 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 
 /**
  * <p>
@@ -54,7 +57,9 @@ public class RpcConsumer {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
                         ChannelPipeline pipeline = socketChannel.pipeline();
-                        pipeline.addLast(new StringEncoder());
+                        // 绑定出参格式为RpcRequest 输出需编码
+                        pipeline.addLast(new RpcEncoder(RpcRequest.class, new JsonSerializer()));
+                        // 绑定入参为String 输入需解码
                         pipeline.addLast(new StringDecoder());
                         // 设置自定义事件处理器
                         pipeline.addLast(userClientHandler);
@@ -66,12 +71,12 @@ public class RpcConsumer {
     /**
      * 创建代理
      *
-     * @param clazz         接口类型
-     * @param providerParam UserService#sayHello#
-     * @return proxy
+     * @param clazz 接口类型
+     * @return T
      */
-    public static Object createProxy(Class<?> clazz, final String providerParam) {
-        return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
+    @SuppressWarnings("unchecked")
+    public static <T> T createProxy(Class<T> clazz) {
+        return (T) Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
                 new Class[]{clazz},
                 (proxy, method, args) -> {
                     // 初始化客户端
@@ -79,7 +84,14 @@ public class RpcConsumer {
                         initClient("127.0.0.1", 9999);
                     }
                     // 给UserClientHandler 设置param参数
-                    userClientHandler.setParam(providerParam + args[0]);
+                    RpcRequest request = new RpcRequest();
+                    request.setRequestId(UUID.randomUUID().toString());
+                    request.setClassName(clazz.getSimpleName());
+                    request.setClazz(clazz);
+                    request.setMethodName(method.getName());
+                    request.setParameters(args);
+                    request.setParameterTypes(new Class[]{String.class});
+                    userClientHandler.setParam(request);
                     // 使用线程池开启一个线程处理call()操作，并返回结果
                     return EXECUTOR_SERVICE.submit(userClientHandler).get();
                 });
