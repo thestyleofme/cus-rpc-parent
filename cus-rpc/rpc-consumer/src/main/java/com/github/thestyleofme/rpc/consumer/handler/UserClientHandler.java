@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 import com.github.thestyleofme.rpc.common.pojo.RpcRequest;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * <p>
@@ -14,6 +15,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
  * @author isaac 2020/10/20 1:30
  * @since 1.0.0
  */
+@Slf4j
 public class UserClientHandler extends ChannelInboundHandlerAdapter implements Callable<Object> {
 
     /**
@@ -35,6 +37,11 @@ public class UserClientHandler extends ChannelInboundHandlerAdapter implements C
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         this.context = ctx;
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        ctx.close();
     }
 
     /**
@@ -60,4 +67,5 @@ public class UserClientHandler extends ChannelInboundHandlerAdapter implements C
     public void setParam(RpcRequest rpcRequest) {
         this.rpcRequest = rpcRequest;
     }
+
 }
